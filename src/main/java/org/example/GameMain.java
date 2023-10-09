@@ -17,4 +17,8 @@ public class GameMain {
     public void getUserInput(Scanner input) {
         lastInput = input.nextLine();
     }
+
+    public void setPlayerCount(String input){
+
+    }
 }

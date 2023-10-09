@@ -28,4 +28,14 @@ class GameMainUnitTest {
 
         assertTrue(newGame.lastInput.compareTo("1") == 0);
     }
+
+    @Test
+    @DisplayName("UNIT TEST 003: Test assignment of user input to player count variable. ")
+    void TestPlayerCountAssignment(){
+        String input = "1\n";
+
+        GameMain newGame = new GameMain();
+        newGame.setPlayerCount(input);
+        assertEquals(1, newGame.playerCount);
+    }
 }
