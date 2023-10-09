@@ -38,4 +38,13 @@ class GameMainUnitTest {
         newGame.setPlayerCount(input);
         assertEquals(1, newGame.playerCount);
     }
+
+    @Test
+    @DisplayName("UNIT TEST 004: Confirm that program does not accept inputs that cannot be converted to ints, do not commit to memory")
+    void TestPlayerCountIntegersOnly(){
+        String input = "CAR";
+        GameMain newGame = new GameMain();
+        newGame.setPlayerCount(input);
+        assertEquals(0, newGame.playerCount);
+    }
 }
