@@ -47,4 +47,21 @@ class GameMainUnitTest {
         newGame.setPlayerCount(input);
         assertEquals(0, newGame.playerCount);
     }
+
+    @Test
+    @DisplayName("UNIT TEST 005: Confirm that program only accepts valid integer values for playerCount (3-5), do not commit to memory otherwise.")
+    void TestPlayerCountValidIntegers(){
+
+        GameMain newGame = new GameMain();
+
+        newGame.setPlayerCount("2");
+        assertEquals(0, newGame.playerCount);
+
+        newGame.setPlayerCount("6");
+        assertEquals(0, newGame.playerCount);
+
+        newGame.setPlayerCount("4");
+        assertEquals(4, newGame.playerCount);
+
+    }
 }
