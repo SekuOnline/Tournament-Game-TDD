@@ -32,7 +32,7 @@ class GameMainUnitTest {
     @Test
     @DisplayName("UNIT TEST 003: Test assignment of user input to player count variable. ")
     void TestPlayerCountAssignment(){
-        String input = "1\n";
+        String input = "1";
 
         GameMain newGame = new GameMain();
         newGame.setPlayerCount(input);

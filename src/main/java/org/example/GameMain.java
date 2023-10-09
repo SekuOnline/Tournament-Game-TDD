@@ -19,6 +19,6 @@ public class GameMain {
     }
 
     public void setPlayerCount(String input){
-
+        playerCount = Integer.parseInt(input);
     }
 }
