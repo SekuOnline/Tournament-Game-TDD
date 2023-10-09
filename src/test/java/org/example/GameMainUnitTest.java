@@ -1,11 +1,9 @@
 package org.example;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

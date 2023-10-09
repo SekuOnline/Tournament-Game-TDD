@@ -16,6 +16,6 @@ public class GameMain {
 
 
     public void getUserInput(Scanner input) {
-
+        lastInput = input.nextLine();
     }
 }
