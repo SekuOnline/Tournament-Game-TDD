@@ -18,4 +18,16 @@ class GameMainUnitTest {
         GameMain newGame = new GameMain();
         assertEquals(0, newGame.playerCount);
     }
+
+    @Test
+    @DisplayName("UNIT TEST 002: Test getting user input.")
+    void TestGetUserInput(){
+        String input = "1\n";
+
+        GameMain newGame = new GameMain();
+
+        newGame.getUserInput(new Scanner(input));
+
+        assertTrue(newGame.lastInput.compareTo("1") == 0);
+    }
 }

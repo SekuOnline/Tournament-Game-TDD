@@ -1,8 +1,11 @@
 package org.example;
 
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class GameMain {
 
-
+    public String lastInput = "";
     int playerCount;
     public GameMain(){
         playerCount = 0;
@@ -12,4 +15,7 @@ public class GameMain {
     }
 
 
+    public void getUserInput(Scanner input) {
+
+    }
 }
