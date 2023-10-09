@@ -20,11 +20,16 @@ public class GameMain {
 
     public void setPlayerCount(String input){
         try{
-            playerCount = Integer.parseInt(input);
+            int newPlayerCount = Integer.parseInt(input);
+            newPlayerCount = Integer.parseInt(input);
+            if (3 <= newPlayerCount && newPlayerCount <= 5){
+                playerCount = newPlayerCount;
+            }
         }
         catch(Exception e){
-
+            return;
         }
+
 
 
     }
