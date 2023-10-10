@@ -1,10 +1,6 @@
 package org.example;
-
 import org.junit.jupiter.api.DisplayName;
-
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,17 +23,17 @@ class GameMainUnitTest {
 
         newGame.getUserInput(new Scanner(input));
 
-        assertTrue(newGame.lastInput.compareTo("1") == 0);
+        assertEquals(0, newGame.lastInput.compareTo("1"));
     }
 
     @Test
     @DisplayName("UNIT TEST 003: Test assignment of user input to player count variable. ")
     void TestPlayerCountAssignment(){
-        String input = "1";
+        String input = Player.maxPlayers + "";
 
         GameMain newGame = new GameMain();
         newGame.setPlayerCount(input);
-        assertEquals(1, newGame.playerCount);
+        assertEquals(Player.maxPlayers, newGame.playerCount);
     }
 
     @Test
@@ -55,14 +51,14 @@ class GameMainUnitTest {
 
         GameMain newGame = new GameMain();
 
-        newGame.setPlayerCount("2");
+        newGame.setPlayerCount((Player.minPlayers -1) + "");
         assertEquals(0, newGame.playerCount);
 
-        newGame.setPlayerCount("6");
+        newGame.setPlayerCount((Player.maxPlayers +1) + "");
         assertEquals(0, newGame.playerCount);
 
-        newGame.setPlayerCount("4");
-        assertEquals(4, newGame.playerCount);
+        newGame.setPlayerCount(Player.maxPlayers + "");
+        assertEquals(Player.maxPlayers, newGame.playerCount);
 
     }
 
@@ -71,7 +67,7 @@ class GameMainUnitTest {
     void TestPlayersStoredInMemory(){
         GameMain newGame = new GameMain();
 
-        System.out.println(newGame.addPlayer("David"));
+        newGame.addPlayer("David");
         assertEquals("David", newGame.players[0].getPlayerName());
     }
 

@@ -22,19 +22,19 @@ public class GameMain {
     public void setPlayerCount(String input){
         try{
             int newPlayerCount = Integer.parseInt(input);
-            newPlayerCount = Integer.parseInt(input);
-            if (3 <= newPlayerCount && newPlayerCount <= 5){
+
+            if (Player.minPlayers <= newPlayerCount && newPlayerCount <= Player.maxPlayers){
                 playerCount = newPlayerCount;
             }
         }
         catch(Exception e){
-            return;
+            System.out.println("Error: Input was not an integer.");
         }
 
     }
 
     public int addPlayer(String playerName){
-        if (Objects.equals(playerName, "")){return 0; };
+        if (Objects.equals(playerName, "")){return 0; }
         for (int i = 0; i < Player.maxPlayers; i++){
             if (Objects.equals(players[i], null)){
                 players[i] = new Player(playerName);
@@ -45,9 +45,9 @@ public class GameMain {
     }
 
     public void initHitPoints() {
-        for(int i = 0; i < players.length; i++) {
-            if (players[i] != null){
-                players[i].setHitPoints(Player.initHitPoints);
+        for(Player player : players) {
+            if (player != null){
+                player.setHitPoints(Player.initHitPoints);
             }
         }
     }
