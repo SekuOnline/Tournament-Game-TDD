@@ -44,5 +44,6 @@ public class GameMain {
         return 0;
     }
 
+    public void initHitPoints(){}
 
 }

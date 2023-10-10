@@ -83,9 +83,28 @@ class GameMainUnitTest {
         assertEquals(1, newGame.addPlayer("David"));
         assertEquals(0, newGame.addPlayer(""));
 
+    }
 
+    @Test
+    @DisplayName("UNIT TEST 008: Test for valid initial number of health points of the players (who all share the same amount)")
+    void TestValidHealthForAllPlayers(){
+        GameMain newGame = new GameMain();
+        for (int i = 0; i < Player.maxPlayers; i++){
+            newGame.addPlayer(i + "");
+        }
+        newGame.initHitPoints();
+        int lastHP = -1;
+        for (int i = 0; i < Player.maxPlayers; i++){
+            if (i == 0){
+                lastHP = newGame.players[i].getHitPoints();
+                assertTrue(lastHP > 0);
+            }
+            else{
+                assertEquals(lastHP, newGame.players[i].getHitPoints());
+                lastHP = newGame.players[i].getHitPoints();
 
-
+            }
+        }
     }
 
 
