@@ -70,8 +70,9 @@ class GameMainUnitTest {
     @DisplayName("UNIT TEST 006: Confirm that GameMain can store player names.")
     void TestPlayersStoredInMemory(){
         GameMain newGame = new GameMain();
-        String[] testArray = {};
-        assertTrue(Arrays.equals(testArray, newGame.players));
+
+        System.out.println(newGame.addPlayer("David"));
+        assertEquals("David", newGame.players[0].getPlayerName());
     }
 
 
@@ -79,10 +80,13 @@ class GameMainUnitTest {
     @DisplayName("UNIT TEST 007: Test that valid player names can be added to the players array, otherwise are not stored.")
     void TestAddingPlayersToMemory(){
         GameMain newGame = new GameMain();
-        newGame.addPlayer("David");
-        newGame.addPlayer("");
-        String[] testArray = {"David"};
-        assertTrue(Arrays.equals(testArray, newGame.players));
+        assertEquals(1, newGame.addPlayer("David"));
+        assertEquals(0, newGame.addPlayer(""));
+
+
+
 
     }
+
+
 }

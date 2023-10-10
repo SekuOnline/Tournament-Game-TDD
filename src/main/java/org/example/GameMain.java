@@ -7,10 +7,10 @@ public class GameMain {
 
     public String lastInput = "";
     int playerCount;
-    String[] players;
+    Player[] players;
     public GameMain(){
         playerCount = 0;
-        players = new String[] {};
+        players = new Player[Player.maxPlayers];
     }
     public static void main(String[] args){
 
@@ -33,16 +33,15 @@ public class GameMain {
 
     }
 
-    public void addPlayer(String playerName){
-        if (Objects.equals(playerName, "")){return; };
-        String[] tmpArray = new String[players.length + 1];
-
-        for (int i = 0; i < players.length; i++){
-            tmpArray[i] = players[i];
+    public int addPlayer(String playerName){
+        if (Objects.equals(playerName, "")){return 0; };
+        for (int i = 0; i < Player.maxPlayers; i++){
+            if (Objects.equals(players[i], null)){
+                players[i] = new Player(playerName);
+                return 1;
+            }
         }
-
-        tmpArray[players.length] = playerName;
-        players = tmpArray;
+        return 0;
     }
 
 
