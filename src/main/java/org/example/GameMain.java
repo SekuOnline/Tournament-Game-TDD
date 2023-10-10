@@ -27,8 +27,7 @@ public class GameMain {
                 playerCount = newPlayerCount;
             }
         }
-        catch(Exception e){
-            System.out.println("Error: Input was not an integer.");
+        catch(Exception ignored){
         }
 
     }
