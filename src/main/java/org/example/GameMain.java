@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class GameMain {
@@ -33,7 +34,15 @@ public class GameMain {
     }
 
     public void addPlayer(String playerName){
+        if (Objects.equals(playerName, "")){return; };
+        String[] tmpArray = new String[players.length + 1];
 
+        for (int i = 0; i < players.length; i++){
+            tmpArray[i] = players[i];
+        }
+
+        tmpArray[players.length] = playerName;
+        players = tmpArray;
     }
 
 
