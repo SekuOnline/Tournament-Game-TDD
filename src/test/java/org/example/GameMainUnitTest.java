@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,5 +64,13 @@ class GameMainUnitTest {
         newGame.setPlayerCount("4");
         assertEquals(4, newGame.playerCount);
 
+    }
+
+    @Test
+    @DisplayName("UNIT TEST 006: Confirm that GameMain can store player names.")
+    void TestPlayersStoredInMemory(){
+        GameMain newGame = new GameMain();
+        String[] testArray = {};
+        assertTrue(Arrays.equals(testArray, newGame.players));
     }
 }
