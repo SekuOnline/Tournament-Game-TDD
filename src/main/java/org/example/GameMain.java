@@ -9,6 +9,7 @@ public class GameMain {
     String[] players;
     public GameMain(){
         playerCount = 0;
+        players = new String[] {};
     }
     public static void main(String[] args){
 
