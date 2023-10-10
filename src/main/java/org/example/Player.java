@@ -5,6 +5,7 @@ public class Player {
     //static variables: for ease of changing 'arbitrary' values.
     public static int minPlayers = 3;
     public static int maxPlayers = 5;
+    public static int initHitPoints = 50;
 
     //private variables
     String playerName;
@@ -20,8 +21,13 @@ public class Player {
     }
 
     public int getHitPoints(){
-        return -1;
+        return this.hitPoints;
     };
+    //setters
+    public void setHitPoints(int value){
+        this.hitPoints = value;
+    }
+
 
     //methods
 

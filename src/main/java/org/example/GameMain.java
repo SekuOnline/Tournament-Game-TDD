@@ -44,6 +44,13 @@ public class GameMain {
         return 0;
     }
 
-    public void initHitPoints(){}
+    public void initHitPoints() {
+        for(int i = 0; i < players.length; i++) {
+            if (players[i] != null){
+                players[i].setHitPoints(Player.initHitPoints);
+            }
+        }
+    }
+
 
 }
