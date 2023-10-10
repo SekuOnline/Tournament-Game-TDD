@@ -73,4 +73,16 @@ class GameMainUnitTest {
         String[] testArray = {};
         assertTrue(Arrays.equals(testArray, newGame.players));
     }
+
+
+    @Test
+    @DisplayName("UNIT TEST 007: Test that valid player names can be added to the players array, otherwise are not stored.")
+    void TestAddingPlayersToMemory(){
+        GameMain newGame = new GameMain();
+        newGame.addPlayer("David");
+        newGame.addPlayer("");
+        String[] testArray = {"David"};
+        assertTrue(Arrays.equals(testArray, newGame.players));
+
+    }
 }
