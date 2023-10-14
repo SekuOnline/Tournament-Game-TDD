@@ -1,5 +1,9 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Deck {
 
     Card[] deck;
@@ -55,6 +59,8 @@ public class Deck {
     }
     //Methods
     public void shuffle(){
-
+        List<Card> cardList = Arrays.asList(this.deck);
+        Collections.shuffle(cardList);
+        cardList.toArray(this.deck);
     }
 }

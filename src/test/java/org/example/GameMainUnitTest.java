@@ -174,7 +174,7 @@ class GameMainUnitTest {
         for(int i = 0; i < 80; i++){
             cardOriginal = original.getCard(i);
             cardShuffle = newGame.deck.getCard(i);
-            System.out.println(cardOriginal.getSuit() +" "+ cardShuffle.getSuit());
+            //System.out.println(cardOriginal.getSuit() +" "+ cardShuffle.getSuit());
             if(cardOriginal.getSuit() != cardShuffle.getSuit() || cardOriginal.getValue() != cardOriginal.getValue()){
                 foundDiff = true;
                 break;
