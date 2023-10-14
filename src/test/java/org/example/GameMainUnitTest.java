@@ -163,5 +163,24 @@ class GameMainUnitTest {
         }
     }
 
+    @Test
+    @DisplayName("UNIT TEST 012: Test that cards have changed position in the deck once shuffled.")
+    void TestDeckShuffling(){
+        GameMain newGame = new GameMain();
+        Deck original = newGame.deck;
+        newGame.deck.shuffle();
+        boolean foundDiff = false;
+        Card cardOriginal, cardShuffle;
+        for(int i = 0; i < 80; i++){
+            cardOriginal = original.getCard(i);
+            cardShuffle = newGame.deck.getCard(i);
+            if(cardOriginal.getSuit() != cardShuffle.getSuit() || cardOriginal.getValue() != cardOriginal.getValue()){
+                foundDiff = true;
+                break;
+            }
+        }
+        assertTrue(foundDiff);
+    }
+
 
 }

@@ -53,4 +53,8 @@ public class Deck {
         }
 
     }
+    //Methods
+    public void shuffle(){
+
+    }
 }
