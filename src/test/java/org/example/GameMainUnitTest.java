@@ -1,11 +1,7 @@
 package org.example;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.EnumSet;
 import java.util.Scanner;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -113,14 +109,14 @@ class GameMainUnitTest {
         int sw = 0, ar = 0, so = 0, de = 0, al = 0, me = 0, ap = 0;
         for (int i = 0; i < 80; i++){
             switch (newGame.deck.getCard(i).getSuit()){
-                case SW: sw++;
-                case AR: ar++;
-                case SO: so++;
-                case DE: de++;
-                case AL: al++;
-                case ME: me++;
-                case AP: ap++;
-                default:;
+                case SW: sw++; break;
+                case AR: ar++; break;
+                case SO: so++; break;
+                case DE: de++; break;
+                case AL: al++; break;
+                case ME: me++; break;
+                case AP: ap++; break;
+                default:
             }
         }
         assertTrue(sw == 15 && ar == 15 && so == 15 && de == 15 && al == 15 && me == 3 && ap == 2);

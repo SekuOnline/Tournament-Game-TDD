@@ -6,12 +6,11 @@ public class Card {
     Suit suit;
     boolean poisoned;
     int damage;
-            //Value = 0 for Alchemy/Merlin/Apprentice cards
+    //Value = 0 for Alchemy/Merlin/Apprentice cards
     int value;
 
     //Constructor
-
-    public Card(){suit = Suit.SW;}
+    public Card(Suit suit, int value){this.suit = suit; this.value = value;}
 
     //getters
     public Suit getSuit(){return suit;}
