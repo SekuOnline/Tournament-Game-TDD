@@ -7,10 +7,12 @@ public class GameMain {
 
     public String lastInput = "";
     int playerCount;
+    Deck deck;
     Player[] players;
     public GameMain(){
         playerCount = 0;
         players = new Player[Player.maxPlayers];
+        deck = new Deck();
     }
     public static void main(String[] args){
 
