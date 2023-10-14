@@ -34,8 +34,20 @@ public class Player {
 
 
     //methods
-    public void dealHand(){
-
+    public void dealHand(Deck deck){
+        int k = 0;
+        for (int i = 0; i < 12; i++){
+            //uses index = k so we don't have to start from the beginning each time we add a card.
+            for(int index = k; index < 80; index++){
+                if(!deck.getCard(index).getTaken()){
+                    deck.getCard(index).setTaken(true);
+                    this.hand[i] = deck.getCard(index);
+                    k++;
+                    System.out.println(this.getPlayerName() + ": "+this.hand[i].getSuit() + " " + this.hand[i].getValue());
+                    break;
+                }
+            }
+        }
     }
 
 

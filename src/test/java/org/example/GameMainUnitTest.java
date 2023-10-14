@@ -193,7 +193,7 @@ class GameMainUnitTest {
         newGame.setPlayerCount("3");
         for (int i = 0; i < newGame.playerCount; i++){
 
-            newGame.players[i].dealHand();
+            newGame.players[i].dealHand(newGame.deck);
             for (int k = 0; k < 12; k++){
                 assertNotNull(newGame.players[i].hand[k]);
 
