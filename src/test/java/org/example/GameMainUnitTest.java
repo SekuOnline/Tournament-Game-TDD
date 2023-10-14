@@ -204,5 +204,27 @@ class GameMainUnitTest {
 
     }
 
+    @Test
+    @DisplayName("UNIT TEST 014: Ensure that cards can be taken out of players hands.")
+    void TestRemovingCardsFromHands(){
+        GameMain newGame = new GameMain();
+        for(int n = 0; n < 3; n++){
+            newGame.addPlayer(n + "");
+        }
+        newGame.setPlayerCount("3");
+        for (int i = 0; i < newGame.playerCount; i++){
+            newGame.players[i].dealHand(newGame.deck);
+
+        }
+        newGame.removeHands();
+        for(int l = 0; l < newGame.playerCount; l++){
+            for (int i = 0; i < newGame.players[l].hand.length; i++){
+                assertNull(newGame.players[l].hand[i]);
+            }
+        }
+
+
+    }
+
 
 }
