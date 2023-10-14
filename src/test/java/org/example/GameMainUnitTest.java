@@ -147,5 +147,21 @@ class GameMainUnitTest {
         }
     }
 
+    @Test
+    @DisplayName("UNIT TEST 011: Test that cards have correct damage(injury) value.")
+    void TestCorrectInjuryValue(){
+        GameMain newGame = new GameMain();
+        Card card;
+        for(int i = 0; i < 80; i++){
+            card = newGame.deck.getCard(i);
+            switch(card.getSuit()){
+                case ME: assertEquals(25, card.getDamage()); break;
+                default:
+                    if (card.getPoisoned()){assertEquals(10, card.getDamage());}
+                    else{assertEquals(5, card.getDamage());}
+            }
+        }
+    }
+
 
 }
