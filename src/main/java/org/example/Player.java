@@ -10,9 +10,13 @@ public class Player {
     //private variables
     String playerName;
     int hitPoints;
+    Card[] hand;
 
     //Constructors:
-    public Player(String playerName){this.playerName = playerName;}
+    public Player(String playerName){
+        this.playerName = playerName;
+        this.hand = new Card[12];
+    }
     public Player(){playerName = "";}
 
     //getters
@@ -22,7 +26,7 @@ public class Player {
 
     public int getHitPoints(){
         return this.hitPoints;
-    };
+    }
     //setters
     public void setHitPoints(int value){
         this.hitPoints = value;
@@ -30,7 +34,9 @@ public class Player {
 
 
     //methods
+    public void dealHand(){
 
+    }
 
 
 

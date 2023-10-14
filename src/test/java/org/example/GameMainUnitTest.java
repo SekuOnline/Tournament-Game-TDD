@@ -183,5 +183,26 @@ class GameMainUnitTest {
         assertTrue(foundDiff);
     }
 
+    @Test
+    @DisplayName("UNIT TEST 013: Ensure that cards are correctly added to each players hand")
+    void TestAddingCardsToHand(){
+        GameMain newGame = new GameMain();
+        for(int n = 0; n < 3; n++){
+            newGame.addPlayer(n + "");
+        }
+        newGame.setPlayerCount("3");
+        for (int i = 0; i < newGame.playerCount; i++){
+
+            newGame.players[i].dealHand();
+            for (int k = 0; k < 12; k++){
+                assertNotNull(newGame.players[i].hand[k]);
+
+
+            }
+        }
+
+
+    }
+
 
 }
