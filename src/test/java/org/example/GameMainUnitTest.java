@@ -1,9 +1,12 @@
 package org.example;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameMainUnitTest {
     @Test
@@ -120,6 +123,28 @@ class GameMainUnitTest {
             }
         }
         assertTrue(sw == 15 && ar == 15 && so == 15 && de == 15 && al == 15 && me == 3 && ap == 2);
+    }
+
+    @Test
+    @DisplayName("UNIT TEST 010: Test that poisoned cards are labeled as poisoned correctly")
+    void TestPoisonedLabel(){
+        GameMain newGame = new GameMain();
+        List<Integer> swP = Arrays.asList(6, 7, 8, 9);
+        List<Integer> arP = Arrays.asList(8,9,10,11);
+        List<Integer> soP = Arrays.asList(5,6,11,12);
+        List<Integer> deP = Arrays.asList(6, 7, 8, 9);
+        Card card;
+        for (int i = 0; i < 80; i++){
+            card = newGame.deck.getCard(i);
+            switch(card.getSuit()){
+                case SW: assertEquals(swP.contains(card.getValue()), card.getPoisoned()); break;
+                case AR: assertEquals(arP.contains(card.getValue()), card.getPoisoned()); break;
+                case SO: assertEquals(soP.contains(card.getValue()), card.getPoisoned()); break;
+                case DE: assertEquals(deP.contains(card.getValue()), card.getPoisoned()); break;
+                default:
+                    assertFalse(card.getPoisoned());
+            }
+        }
     }
 
 

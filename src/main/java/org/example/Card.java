@@ -1,6 +1,11 @@
 package org.example;
 
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Card {
+
 
     //private variables
     Suit suit;
@@ -16,6 +21,7 @@ public class Card {
     public Suit getSuit(){return suit;}
     public int getDamage(){return damage;}
     public int getValue(){return value;}
+    public boolean getPoisoned(){return poisoned;}
 
 
 
