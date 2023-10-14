@@ -43,7 +43,7 @@ public class Player {
                     deck.getCard(index).setTaken(true);
                     this.hand[i] = deck.getCard(index);
                     k++;
-                    System.out.println(this.getPlayerName() + ": "+this.hand[i].getSuit() + " " + this.hand[i].getValue());
+                    //System.out.println(this.getPlayerName() + ": "+this.hand[i].getSuit() + " " + this.hand[i].getValue());
                     break;
                 }
             }

@@ -53,5 +53,17 @@ public class GameMain {
         }
     }
 
+    //methods
+    public void removeHands(){
+        for(int k = 0; k < this.playerCount; k++){
+            for(int i = 0; i < this.players[k].hand.length; i++){
+                if (players[k].hand[i] != null){
+                    players[k].hand[i].setTaken(false);
+                }
+                players[k].hand[i] = null;
+            }
+        }
+    }
+
 
 }
