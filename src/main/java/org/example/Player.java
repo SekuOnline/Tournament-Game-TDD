@@ -17,7 +17,7 @@ public class Player {
         this.playerName = playerName;
         this.hand = new Card[12];
     }
-    public Player(){playerName = "";}
+
 
     //getters
     public String getPlayerName(){
@@ -42,6 +42,7 @@ public class Player {
                 if(!deck.getCard(index).getTaken()){
                     deck.getCard(index).setTaken(true);
                     this.hand[i] = deck.getCard(index);
+                    deck.getCard(index).setPlayer(this.playerName);
                     k++;
                     //System.out.println(this.getPlayerName() + ": "+this.hand[i].getSuit() + " " + this.hand[i].getValue());
                     break;

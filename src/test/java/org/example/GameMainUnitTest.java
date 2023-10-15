@@ -132,7 +132,7 @@ class GameMainUnitTest {
         List<Integer> swP = Arrays.asList(6, 7, 8, 9);
         List<Integer> arP = Arrays.asList(8,9,10,11);
         List<Integer> soP = Arrays.asList(5,6,11,12);
-        List<Integer> deP = Arrays.asList(6, 7, 8, 9);
+        List<Integer> deP = Arrays.asList(6, 7, 9, 10);
         Card card;
         for (int i = 0; i < 80; i++){
             card = newGame.deck.getCard(i);
@@ -222,7 +222,6 @@ class GameMainUnitTest {
                 assertNull(newGame.players[l].hand[i]);
             }
         }
-
 
     }
 

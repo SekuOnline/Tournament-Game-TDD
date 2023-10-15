@@ -2,14 +2,12 @@ package org.example;
 
 import java.util.*;
 
-
-
 public class Card {
 
     private static final List<Integer> swP = Arrays.asList(6, 7, 8, 9);
     private static final List<Integer> arP = Arrays.asList(8,9,10,11);
     private static final List<Integer> soP = Arrays.asList(5,6,11,12);
-    private static final List<Integer> deP = Arrays.asList(6, 7, 8, 9);
+    private static final List<Integer> deP = Arrays.asList(6, 7, 9, 10);
     //private variables
     Suit suit;
     boolean poisoned;
@@ -17,6 +15,7 @@ public class Card {
     int damage;
     //Value = 0 for Alchemy/Merlin/Apprentice cards
     int value;
+    String player;
 
     //Constructor
     public Card(Suit suit, int value){
@@ -51,8 +50,14 @@ public class Card {
     public boolean getTaken(){return taken;}
 
     public void setTaken(boolean taken){this.taken = taken;}
-
-
+    public void setPlayer(String playerName){this.player = playerName;}
+    //
+    public String toString(){
+        if (this.suit == Suit.ME || this.suit == Suit.AP || this.suit == Suit.AL){
+            return(this.suit + "");
+        }
+        return (this.suit + " | " + this.value);
+    }
 
 
 
