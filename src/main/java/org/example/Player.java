@@ -51,6 +51,22 @@ public class Player {
         }
     }
 
+    public boolean removeCard(int index){
+        if (hand[index] == null){
+            return false;
+        }
+        hand[index] = null;
+        return true;
+    }
+
+    public void printHand(){
+        for (int i = 0; i < hand.length; i++){
+            if (hand[i] != null){
+                System.out.println("Card "+(i+1) + ": "+hand[i].toString());
+            }
+        }
+    }
+
 
 
 

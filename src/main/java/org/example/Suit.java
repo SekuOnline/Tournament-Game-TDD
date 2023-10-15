@@ -7,5 +7,6 @@ public enum Suit {
     DE,
     AL,
     ME,
-    AP
+    AP,
+    NONE
 }

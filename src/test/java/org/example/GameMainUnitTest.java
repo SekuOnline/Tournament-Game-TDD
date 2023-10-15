@@ -235,6 +235,26 @@ class GameMainUnitTest {
             assertEquals(newGame.players[i].getPlayerName(), (i + ""));
         }
 
+    }
+
+    @Test
+    @DisplayName("UNIT TEST 016: Test for valid melee suit start: Alchemy last card")
+    void TestBeginMeleeWithAlchemyLastCard(){
+        GameMain newGame = new GameMain();
+        newGame.initPlayers(new Scanner("3\nA\nB\nC\n"));
+
+        Card alchemy = new Card(Suit.AL, 0);
+        newGame.players[0].hand[0] = alchemy;
+        for (int i = 1; i < 12; i++){
+            newGame.players[0].removeCard(i);
+        }
+
+        Melee melee = new Melee(0, 0, newGame.playerCount, newGame.players);
+
+        assertTrue(melee.isValidPlay(0, alchemy, newGame.players[0]));
+
+
+
 
 
     }
