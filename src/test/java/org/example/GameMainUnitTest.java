@@ -252,11 +252,18 @@ class GameMainUnitTest {
         Melee melee = new Melee(0, 0, newGame.playerCount, newGame.players);
 
         assertTrue(melee.isValidPlay(0, alchemy, newGame.players[0]));
+    }
 
+    @Test
+    @DisplayName("UNIT TEST 017: Test for cards not matching suit of play being invalid to play")
+    void TestInvalidCardForWrongSuit(){
+        GameMain newGame = new GameMain();
+        newGame.initPlayers(new Scanner("3\nA\nB\nC\n"));
+        Melee melee = new Melee(0, 0, newGame.playerCount, newGame.players);
+        melee.cardStack[0] = new Card(Suit.SW, 1);
 
-
-
-
+        assertFalse(melee.isValidPlay(1, new Card(Suit.AR, 2), newGame.players[1]));
+        assertTrue(melee.isValidPlay(1, new Card(Suit.SW, 2), newGame.players[1]));
     }
 
 
