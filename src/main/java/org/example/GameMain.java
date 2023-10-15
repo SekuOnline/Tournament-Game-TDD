@@ -68,7 +68,10 @@ public class GameMain {
                 players[i] = new Player(playerName);
                 return 1;
             }
-
+            else if (Objects.equals(players[i].getPlayerName(), playerName)){
+                System.out.println("Invalid player name - Players cannot have the same names.");
+                return 0;
+            }
         }
         return 0;
     }
