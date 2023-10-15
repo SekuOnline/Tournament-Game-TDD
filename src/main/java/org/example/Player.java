@@ -62,7 +62,7 @@ public class Player {
     public void printHand(){
         for (int i = 0; i < hand.length; i++){
             if (hand[i] != null){
-                System.out.println("Card "+(i+1) + ": "+hand[i].toString());
+                System.out.println((i+1) + ": "+hand[i].toString());
             }
         }
     }

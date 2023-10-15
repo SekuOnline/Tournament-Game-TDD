@@ -91,6 +91,17 @@ public class GameMain {
 
     }
 
+    public void startRound(int leaderIndex){
+        removeHands();
+        deck.shuffle();
+        for (int i = 0; i < playerCount; i++){
+            players[i].dealHand(deck);
+        }
+        Melee melee = new Melee(leaderIndex, 0, playerCount, players);
+        for (int i = 0; i < playerCount; i++){
+            melee.printPlayerTurnInfo(players[i]);
+        }
+    }
     //main method:
     public static void main(String[] args){
 
