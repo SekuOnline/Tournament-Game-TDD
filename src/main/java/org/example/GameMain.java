@@ -58,14 +58,34 @@ public class GameMain {
     }
 
     public int addPlayer(String playerName){
-        if (Objects.equals(playerName, "")){return 0; }
+        if (Objects.equals(playerName, "")){
+            System.out.println("Invalid player name - Player names cannot be empty.");
+            return 0;
+        }
         for (int i = 0; i < Player.maxPlayers; i++){
+
             if (Objects.equals(players[i], null)){
                 players[i] = new Player(playerName);
                 return 1;
             }
+
         }
         return 0;
+    }
+
+    public void initPlayers(Scanner input){
+        System.out.println("Enter a number of players between 3-5: ");
+        this.getUserInput(input);
+        this.setPlayerCount(lastInput);
+        for (int i = 0; i < playerCount; i++){
+            System.out.println("Enter a name for player # "+(i+1)+": ");
+            this.getUserInput(input);
+            if (this.addPlayer(lastInput) == 0){
+                i--;
+            }
+
+        }
+
     }
 
     //main method:

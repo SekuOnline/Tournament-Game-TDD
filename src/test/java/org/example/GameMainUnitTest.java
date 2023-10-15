@@ -225,5 +225,19 @@ class GameMainUnitTest {
 
     }
 
+    @Test
+    @DisplayName("UNIT TEST 015: Test for same playerName being invalid")
+    void TestDetermineWinners(){
+        GameMain newGame = new GameMain();
+
+        newGame.initPlayers(new Scanner("3\n0\n1\n\n1\n2\n"));
+        for (int i = 0; i < 3; i++){
+            assertEquals(newGame.players[i].getPlayerName(), (i + ""));
+        }
+
+
+
+    }
+
 
 }
