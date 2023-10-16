@@ -42,7 +42,7 @@ public class Player {
                 if(!deck.getCard(index).getTaken()){
                     deck.getCard(index).setTaken(true);
                     this.hand[i] = deck.getCard(index);
-                    deck.getCard(index).setPlayer(this.playerName);
+                    deck.getCard(index).setPlayer(this);
                     k++;
                     //System.out.println(this.getPlayerName() + ": "+this.hand[i].getSuit() + " " + this.hand[i].getValue());
                     break;
@@ -62,12 +62,14 @@ public class Player {
     public void printHand(){
         for (int i = 0; i < hand.length; i++){
             if (hand[i] != null){
-                System.out.println("Card "+(i+1) + ": "+hand[i].toString());
+                System.out.println((i+1) + ": "+hand[i].toString());
             }
         }
     }
 
-
+    public void takeDamage(int damageTaken){
+        this.hitPoints-=damageTaken;
+    }
 
 
 }

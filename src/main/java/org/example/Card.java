@@ -15,7 +15,7 @@ public class Card {
     int damage;
     //Value = 0 for Alchemy/Merlin/Apprentice cards
     int value;
-    String player;
+    Player player;
 
     //Constructor
     public Card(Suit suit, int value){
@@ -50,7 +50,7 @@ public class Card {
     public boolean getTaken(){return taken;}
 
     public void setTaken(boolean taken){this.taken = taken;}
-    public void setPlayer(String playerName){this.player = playerName;}
+    public void setPlayer(Player player){this.player = player;}
     //
     public String toString(){
         if (this.suit == Suit.ME || this.suit == Suit.AP || this.suit == Suit.AL){
