@@ -21,7 +21,7 @@ public class Melee {
     }
 
     public int determinePlayerNumber(int playerIndex){
-        return abs((leaderIndex - playerIndex) % playerCount);
+        return abs((leaderIndex + playerIndex) % playerCount);
     }
 
     public boolean isValidPlay(int playerNumber, Card card, Player player){
