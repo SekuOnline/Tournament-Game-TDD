@@ -24,38 +24,45 @@ public class Melee {
         return abs((leaderIndex + playerIndex) % playerCount);
     }
 
+    //Checks if a played card is valid
     public boolean isValidPlay(int playerNumber, Card card, Player player){
         //case of leader selecting suit
         //System.out.println(currentSuit + " " + card.getSuit());
-        if (card.getSuit() == Suit.AL) {
-            //System.out.print("isValidPlay");
-            if (checkAlchemy(player)) {
-                System.out.println("Alchemy card is invalid: Another valid play exists.");
-                return true;
-            } else {
-                return false;
+        if (card != null){
+            if (card.getSuit() == Suit.AL) {
+
+                if (checkAlchemy(player)) {
+                    return true;
+                } else {
+                    System.out.println("Alchemy card is invalid: Another valid play exists.");
+                    return false;
+                }
             }
-        }
-        else if (playerNumber == leaderIndex){
+            else if (playerNumber == leaderIndex){
+                return true;
+            }
+            //If the player is not the leader, then the card must match the suit (when applicable)
+            else if (currentSuit != Suit.NONE){
+                //Matching suit, merlin, or apprentice are always okay
+                return card.suit == currentSuit || card.suit == Suit.ME || card.suit == Suit.AP;
+                //if the card is a basic card of a different suit return false.
+
+
+                //
+            }
+            //if the current suit IS none (from alchemy card only), then anything is valid.
             return true;
         }
-        //If the player is not the leader, then the card must match the suit (when applicable)
-        else if (currentSuit != Suit.NONE){
-            //Matching suit, merlin, or apprentice are always okay
-            return card.suit == currentSuit || card.suit == Suit.ME || card.suit == Suit.AP;
-            //if the card is a basic card of a different suit return false.
 
+        return false;
 
-            //
-        }
-        //if the current suit IS none (from alchemy card only), then anything is valid.
-        return true;
     }
 
     public void printPlayerTurnInfo(Player player){
         System.out.println("------------------------------------------");
-        System.out.println(player.getPlayerName() +"'s turn");
-        System.out.println("Select a card to play by index (Current suit: "+currentSuit+" )");
+        System.out.print(player.getPlayerName() +"'s turn");
+        System.out.println(" (HP: "+player.getHitPoints()+")");
+        System.out.println("Select a card to play by index (Current suit: ["+currentSuit+"])");
         System.out.println("Current cards in play: ");
         for (Card card : cardStack) {
             if (card != null) {
@@ -68,26 +75,30 @@ public class Melee {
 
 
     }
+
+    //Checks if a valid playable card exists within the players hand.
     public boolean checkValidPlay(Player player){
-        boolean validPlay = false;
+
         for(int i = 0; i < player.hand.length; i++){
             if (player.hand[i] != null){
                 //System.out.println("Item = currSuit");
                 //System.out.println(player.hand[i].getSuit() == currentSuit);
-                if (player.hand[i].getSuit() == currentSuit || player.hand[i].getSuit() == Suit.ME || player.hand[i].getSuit() == Suit.AP || currentSuit == Suit.NONE){
+                Suit cardSuit = player.hand[i].getSuit();
+                if (cardSuit == currentSuit || cardSuit == Suit.ME || cardSuit == Suit.AP || (currentSuit == Suit.NONE && (cardSuit == Suit.SW || cardSuit == Suit.DE || cardSuit == Suit.AR || cardSuit == Suit.SO))){
                     //System.out.println("Player has valid play.");
+                    System.out.println("Valid play, card: "+(i+1));
                     return true;
                 }
-                else {
-                    //System.out.println("checkValidPlay");
-                    if(checkAlchemy(player)) {
-                        return true;
-                    }
+                else if (cardSuit == Suit.AL && checkAlchemy(player)){
+                    System.out.println("Valid play, AL card");
+                    return true;
                 }
+
 
 
             }
         }
+
         return false;
     }
 
@@ -95,12 +106,15 @@ public class Melee {
 
 
         for (int i = 0; i < player.hand.length; i++){
-            if (player.hand[i] != null && player.hand[i].getSuit() != Suit.AL){
 
+            if (player.hand[i] != null){
 
-                if (player.hand[i].getSuit() == currentSuit || player.hand[i].getSuit() == Suit.ME || player.hand[i].getSuit() == Suit.AP || currentSuit == Suit.NONE){
-                    //System.out.println("You cannot play an alchemy card, as you have another playable card: "+player.hand[i].toString());
-                    return false;
+                Suit cardSuit = player.hand[i].getSuit();
+                if (player.hand[i].getSuit() != Suit.AL) {
+                    if (cardSuit == currentSuit || cardSuit == Suit.ME || cardSuit == Suit.AP || (currentSuit == Suit.NONE && (cardSuit == Suit.SW || cardSuit == Suit.DE || cardSuit == Suit.AR || cardSuit == Suit.SO))) {
+                        //System.out.println("You cannot play an alchemy card, as you have another playable card: "+player.hand[i].toString());
+                        return false;
+                    }
                 }
             }
         }

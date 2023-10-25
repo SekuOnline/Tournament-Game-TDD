@@ -90,7 +90,8 @@ class GameMainUnitTest {
         for (int i = 0; i < Player.maxPlayers; i++){
             newGame.addPlayer(i + "");
         }
-        newGame.initHitPoints();
+        Scanner scanner = new Scanner("-1");
+        newGame.initHitPoints(scanner);
         int lastHP = -1;
         for (int i = 0; i < Player.maxPlayers; i++){
             if (i == 0){
