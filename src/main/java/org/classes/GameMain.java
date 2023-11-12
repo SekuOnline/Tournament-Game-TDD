@@ -146,7 +146,7 @@ public class GameMain {
             players[i].dealHand(deck);
         }
         for (int meleeCount  = 0; meleeCount < 12; meleeCount++){
-           loserIndex = doMelee(loserIndex, input);
+           loserIndex = doMelee(loserIndex, input).loserIndex;
            if(loserIndex < 0){
                loserIndex = prevLoserIndex;
            }
@@ -193,7 +193,7 @@ public class GameMain {
 
     //doMelee takes the loserIndex (aka the leader for the new melee), and returns the updated loserIndex.
     //All other information is obtained through the class variables.
-    public int doMelee(int loserIndex, Scanner input){
+    public Melee doMelee(int loserIndex, Scanner input){
         Melee melee = new Melee(loserIndex, 0, playerCount, players);
         Player currentPlayer;
         for (int i = 0; i < playerCount; i++){
@@ -213,10 +213,10 @@ public class GameMain {
                 continue;
             }
 
-            getUserInput(new Scanner(System.in));
+            getUserInput(input);
             Card playedCard = currentPlayer.hand[Integer.parseInt(lastInput) - 1];
 
-            //System.out.println("Before isvalidplay");
+
             while(!melee.isValidPlay(melee.determinePlayerNumber(i), playedCard , currentPlayer)){
                 System.out.println("Invalid card played: ");
                 getUserInput(input);
@@ -295,7 +295,10 @@ public class GameMain {
         //If it is equal to null, then there is no loser
         if (lowestCard == null){
             System.out.println("There is no loser for this melee.");
-            return -1;
+            melee.loserIndex = -1;
+            for (int i = 0; i < melee.playerCount; i++){
+                melee.cardStack[i] = null;
+            }
         }
         else{
             System.out.println("The lowest valued non-duped card was: "+ lowestCard);
@@ -305,11 +308,11 @@ public class GameMain {
 
             for (int i = 0; i < playerCount; i++){
                 if (players[i] == lowestCard.player){
-                    loserIndex = i;
+                    melee.loserIndex = i;
                 }
             }
         }
-        return loserIndex;
+        return melee;
     }
 
 

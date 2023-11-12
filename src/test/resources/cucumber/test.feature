@@ -3,9 +3,9 @@ Feature: Melee
 
   Scenario Outline: The loser and number of injury points are correctly determined.
     Given Player "1" plays the card <first>
-    And   Player "2" plays the card <second>
-    And   Player "3" plays the card <third>
-    And   Player "4" "plays the card <fourth>
+    And Player "2" plays the card <second>
+    And Player "3" plays the card <third>
+    And Player "4" plays the card <fourth>
     Then  The loser should be <loser>
     And   The injury points should be <injury>
 
@@ -24,8 +24,8 @@ Feature: Melee
     | SW10  | SW1     | SW2   | ME1     | P3    | 40      |
     | SW10  | AP10    | SW15  | ME10    | P3    | 40      |
     | SW10  | SW1     | AL2   | ME2     | P2    | 40      |
-    | AL2   | DE7     | SW6   | ME2     | P1    | 35      |
-    | AL6   | ME7     | DW6   | SO5     | P4    | 45      |
+    | AL2   | DE7     | SW6   | AR8     | P1    | 35      |
+    | AL6   | ME7     | AP8   | SO5     | P4    | 45      |
     | AL12  | DE7     | SW6   | AR8     | P3    | 35      |
     | MESW13| SW10    | SW1   | AL2     | P3    | 40      |
     | APSW13| SW10    | SW1   | SW2     | P3    | 20      |

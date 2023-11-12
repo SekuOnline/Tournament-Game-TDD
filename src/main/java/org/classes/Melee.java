@@ -8,7 +8,9 @@ public class Melee {
     int meleeNumber;
     int playerCount;
     Player[] players;
-    Card[] cardStack;
+    public Card[] cardStack;
+
+    public int loserIndex;
 
     public Melee(int leaderIndex, int meleeNumber, int playerCount, Player[] players){
         this.leaderIndex = leaderIndex;
