@@ -1,4 +1,4 @@
-package org.example;
+package org.classes;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -7,9 +7,9 @@ public class GameMain {
 
     //private variables
     public String lastInput = "";
-    int playerCount;
-    Deck deck;
-    Player[] players;
+    public int playerCount;
+    public Deck deck;
+    public Player[] players;
 
     int leaderIndex;
 

@@ -1,15 +1,15 @@
-package org.example;
+package org.classes;
 
 import static java.lang.Math.abs;
 
 public class Melee {
+    public Suit currentSuit;
     int leaderIndex;
     int meleeNumber;
     int playerCount;
     Player[] players;
     Card[] cardStack;
 
-    Suit currentSuit;
     public Melee(int leaderIndex, int meleeNumber, int playerCount, Player[] players){
         this.leaderIndex = leaderIndex;
         this.meleeNumber = meleeNumber;

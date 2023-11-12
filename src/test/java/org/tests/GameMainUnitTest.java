@@ -1,4 +1,5 @@
-package org.example;
+package org.tests;
+import org.classes.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

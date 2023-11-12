@@ -1,4 +1,4 @@
-package org.example;
+package org.classes;
 
 public class Player {
 
@@ -10,7 +10,7 @@ public class Player {
     //private variables
     String playerName;
     int hitPoints;
-    Card[] hand;
+    public Card[] hand;
 
     //Constructors:
     public Player(String playerName){
