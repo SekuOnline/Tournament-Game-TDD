@@ -139,132 +139,20 @@ public class GameMain {
 
     public void startRound(int leaderIndex, Scanner input){
         int loserIndex = leaderIndex;
+        int prevLoserIndex = leaderIndex;
         removeHands();
         deck.shuffle();
         for (int i = 0; i < playerCount; i++){
             players[i].dealHand(deck);
         }
         for (int meleeCount  = 0; meleeCount < 12; meleeCount++){
-            Melee melee = new Melee(loserIndex, 0, playerCount, players);
-            Player currentPlayer;
-            for (int i = 0; i < playerCount; i++){
-
-                currentPlayer = players[melee.determinePlayerNumber(i)];
-                //System.out.println("Before printPlayerInfo");
-                melee.printPlayerTurnInfo(currentPlayer);
-                //System.out.println("After printPlayerInfo");
-
-                //Asking for played card before checking if user has a playable card
-                if (!melee.checkValidPlay(currentPlayer)){
-                    //System.out.println("Inside checkvalidplay");
-                    //shame damage
-                    System.out.println(currentPlayer.getPlayerName() + " Cannot play any cards and takes 5 shame damage immediately.");
-                    currentPlayer.takeDamage(5);
-                    //checkHP
-                    checkPlayersBelowZero();
-                    continue;
-                }
-
-                //System.out.println("After checkValidPlay");
-
-                getUserInput(new Scanner(System.in));
-                Card playedCard = currentPlayer.hand[Integer.parseInt(lastInput) - 1];
-
-                //System.out.println("Before isvalidplay");
-                while(!melee.isValidPlay(melee.determinePlayerNumber(i), playedCard , currentPlayer)){
-                    System.out.println("Invalid card played: ");
-                    getUserInput(input);
-                    playedCard = currentPlayer.hand[(Integer.parseInt(lastInput) - 1)];
-                }
-                //card added to card stack
-
-                currentPlayer.removeCard(Integer.parseInt(lastInput) - 1);
-
-                //If the current player is the leader, set the suit.
-                if (i==0 && (playedCard.getSuit() == Suit.SW || playedCard.getSuit() == Suit.AR ||playedCard.getSuit() == Suit.SO||playedCard.getSuit() == Suit.DE)){
-                    melee.currentSuit = playedCard.getSuit();
-                }
-                //If the player played a merlin, apprentice, or alchemy card (Whether they're the leader or not)
-                else if (playedCard.getSuit() == Suit.ME || playedCard.getSuit() == Suit.AL || playedCard.getSuit() == Suit.AP){
-
-                    //setting suit for i=0, for merlin / app cards
-                    if((playedCard.getSuit() == Suit.ME || playedCard.getSuit() == Suit.AP) && i == 0){
-                        boolean correctInput = false;
-                        while (!correctInput){
-                            System.out.print("Enter a suit for the melee (SW, AR, SO, DE): ");
-                            getUserInput(input);
-                            try{
-                                melee.currentSuit = Suit.valueOf(lastInput);
-                                correctInput = true;
-                            }catch(Exception exception){
-                                System.out.println("Invalid suit given: "+lastInput);
-
-                            }
-                        }
-
-                    } else if (playedCard.getSuit() == Suit.AL && i == 0) {
-                        melee.currentSuit = Suit.NONE;
-                    }
-
-                    System.out.print("Enter a value for that card (between 1-15): ");
-                    getUserInput(input);
-                    playedCard.value = Integer.parseInt(lastInput);
-                }
-                melee.cardStack[i] = playedCard;
-
-
-
-            }
-            //System.out.println("After player turns");
-            //By this point, all players have played cards (if able). Shame must be added above.
-            //Determine loser, deal damage, ect.
-            int damage = getTotalDamage(melee.cardStack);
-            Card lowestCard = null;
-
-            for (int k = 0; k < melee.cardStack.length; k++){
-                boolean notShared = true;
-                if (melee.cardStack[k] != null) {
-                    for (int j = 0; j < melee.cardStack.length; j++) {
-                        if (melee.cardStack[j] != null) {
-                            if ((melee.cardStack[k].getValue() == melee.cardStack[j].getValue()) && k != j) {
-                                notShared = false;
-                                break;
-                            }
-                        }
-                    }
-                    //if a card is the only card of a certain value
-                    if (notShared) {
-                        //compare it to the current lowest notShared card
-                        if (lowestCard != null) {
-                            if (lowestCard.getValue() > melee.cardStack[k].getValue()) {
-                                lowestCard = melee.cardStack[k];
-                            }
-                        } else {
-                            lowestCard = melee.cardStack[k];
-                        }
-                    }
-                }
-            }
-            //Now we have the lowest card -> if it's not equal to null then we have a loser.
-            //If it is equal to null, then there is no loser
-            if (lowestCard == null){
-                System.out.println("There is no loser for this melee.");
-            }
-            else{
-                System.out.println("The lowest valued non-duped card was: "+ lowestCard);
-                System.out.println(lowestCard.player.getPlayerName()+" is the loser of this melee.\nThey take "+damage+" injury.");
-                lowestCard.player.takeDamage(damage);
-                checkPlayersBelowZero();
-
-                for (int i = 0; i < playerCount; i++){
-                    if (players[i] == lowestCard.player){
-                        loserIndex = i;
-                    }
-                }
-            }
-
-
-
+           loserIndex = doMelee(loserIndex, input);
+           if(loserIndex < 0){
+               loserIndex = prevLoserIndex;
+           }
+           else{
+               prevLoserIndex = loserIndex;
+           }
         }
         //set new leader, then round ends.
         setLeaderIndex((leaderIndex+1)%playerCount);
@@ -303,8 +191,126 @@ public class GameMain {
         return damage;
     }
 
+    //doMelee takes the loserIndex (aka the leader for the new melee), and returns the updated loserIndex.
+    //All other information is obtained through the class variables.
+    public int doMelee(int loserIndex, Scanner input){
+        Melee melee = new Melee(loserIndex, 0, playerCount, players);
+        Player currentPlayer;
+        for (int i = 0; i < playerCount; i++){
+
+            currentPlayer = players[melee.determinePlayerNumber(i)];
+            //System.out.println("Before printPlayerInfo");
+            melee.printPlayerTurnInfo(currentPlayer);
+            //System.out.println("After printPlayerInfo");
+
+            //Asking for played card before checking if user has a playable card
+            if (!melee.checkValidPlay(currentPlayer)){
+                //shame damage
+                System.out.println(currentPlayer.getPlayerName() + " Cannot play any cards and takes 5 shame damage immediately.");
+                currentPlayer.takeDamage(5);
+                //checkHP
+                checkPlayersBelowZero();
+                continue;
+            }
+
+            getUserInput(new Scanner(System.in));
+            Card playedCard = currentPlayer.hand[Integer.parseInt(lastInput) - 1];
+
+            //System.out.println("Before isvalidplay");
+            while(!melee.isValidPlay(melee.determinePlayerNumber(i), playedCard , currentPlayer)){
+                System.out.println("Invalid card played: ");
+                getUserInput(input);
+                playedCard = currentPlayer.hand[(Integer.parseInt(lastInput) - 1)];
+            }
+            //card added to card stack
+
+            currentPlayer.removeCard(Integer.parseInt(lastInput) - 1);
+
+            //If the current player is the leader, set the suit.
+            if (i==0 && (playedCard.getSuit() == Suit.SW || playedCard.getSuit() == Suit.AR ||playedCard.getSuit() == Suit.SO||playedCard.getSuit() == Suit.DE)){
+                melee.currentSuit = playedCard.getSuit();
+            }
+            //If the player played a merlin, apprentice, or alchemy card (Whether they're the leader or not)
+            else if (playedCard.getSuit() == Suit.ME || playedCard.getSuit() == Suit.AL || playedCard.getSuit() == Suit.AP){
+
+                //setting suit for i=0, for merlin / app cards
+                if((playedCard.getSuit() == Suit.ME || playedCard.getSuit() == Suit.AP) && i == 0){
+                    boolean correctInput = false;
+                    while (!correctInput){
+                        System.out.print("Enter a suit for the melee (SW, AR, SO, DE): ");
+                        getUserInput(input);
+                        try{
+                            melee.currentSuit = Suit.valueOf(lastInput);
+                            correctInput = true;
+                        }catch(Exception exception){
+                            System.out.println("Invalid suit given: "+lastInput);
+
+                        }
+                    }
+
+                } else if (playedCard.getSuit() == Suit.AL && i == 0) {
+                    melee.currentSuit = Suit.NONE;
+                }
+
+                System.out.print("Enter a value for that card (between 1-15): ");
+                getUserInput(input);
+                playedCard.value = Integer.parseInt(lastInput);
+            }
+            melee.cardStack[i] = playedCard;
 
 
+
+        }
+        //System.out.println("After player turns");
+        //By this point, all players have played cards (if able). Shame must be added above.
+        //Determine loser, deal damage, ect.
+        int damage = getTotalDamage(melee.cardStack);
+        Card lowestCard = null;
+
+        for (int k = 0; k < melee.cardStack.length; k++){
+            boolean notShared = true;
+            if (melee.cardStack[k] != null) {
+                for (int j = 0; j < melee.cardStack.length; j++) {
+                    if (melee.cardStack[j] != null) {
+                        if ((melee.cardStack[k].getValue() == melee.cardStack[j].getValue()) && k != j) {
+                            notShared = false;
+                            break;
+                        }
+                    }
+                }
+                //if a card is the only card of a certain value
+                if (notShared) {
+                    //compare it to the current lowest notShared card
+                    if (lowestCard != null) {
+                        if (lowestCard.getValue() > melee.cardStack[k].getValue()) {
+                            lowestCard = melee.cardStack[k];
+                        }
+                    } else {
+                        lowestCard = melee.cardStack[k];
+                    }
+                }
+            }
+        }
+        //Now we have the lowest card -> if it's not equal to null then we have a loser.
+        //If it is equal to null, then there is no loser
+        if (lowestCard == null){
+            System.out.println("There is no loser for this melee.");
+            return -1;
+        }
+        else{
+            System.out.println("The lowest valued non-duped card was: "+ lowestCard);
+            System.out.println(lowestCard.player.getPlayerName()+" is the loser of this melee.\nThey take "+damage+" injury.");
+            lowestCard.player.takeDamage(damage);
+            checkPlayersBelowZero();
+
+            for (int i = 0; i < playerCount; i++){
+                if (players[i] == lowestCard.player){
+                    loserIndex = i;
+                }
+            }
+        }
+        return loserIndex;
+    }
 
 
 
