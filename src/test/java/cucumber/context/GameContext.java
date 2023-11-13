@@ -18,11 +18,6 @@ public class GameContext {
     public GameContext(){
 
         game = new GameMain();
-        game.setPlayerCount("4");
-        for (int i = 1; i < 5; i++){
-            game.addPlayer("Player " + i);
-            game.players[i-1].setHitPoints(999);
-        }
         scannerInput = "";
     }
 
@@ -33,6 +28,15 @@ public class GameContext {
         return instance;
     }
 
+    public void initGame(String playerNum, String playerNames, String initHP){
+        instance.scannerInput = playerNum ;  //# of players input
+        instance.scannerInput += playerNames; //Player names
+        instance.scannerInput += initHP; //Initial Health points.
+        System.out.println(instance.scannerInput);
+        instance.game.initPlayers(new Scanner(instance.scannerInput));
+        instance.scannerInput = "";
+    }
+
     public void reset(){
         instance = new GameContext();
     }
@@ -41,6 +45,7 @@ public class GameContext {
     public void afterScenario(){
         if (instance != null){
             instance.reset();
+
         }
     }
 

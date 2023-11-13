@@ -18,7 +18,6 @@ public class GameMain {
         playerCount = 0;
         players = new Player[Player.maxPlayers];
         deck = new Deck();
-
         leaderIndex = 0;
     }
 
@@ -28,20 +27,22 @@ public class GameMain {
     }
 
     //setters
-    public void setPlayerCount(String input){
+    public int setPlayerCount(String input){
         try{
-            int newPlayerCount = Integer.parseInt(input);
+            int newPlayerCount = Integer.parseInt(input.strip());
 
-            if (Player.minPlayers <= newPlayerCount && newPlayerCount <= Player.maxPlayers){
+            if ((Player.minPlayers <= newPlayerCount) && (newPlayerCount <= Player.maxPlayers)){
+                System.out.println("Valid player num: "+newPlayerCount);
                 playerCount = newPlayerCount;
+                return 1;
             }
             else{
                 System.out.println("Invalid player count.");
-                System.exit(-1);
+                return -1;
             }
         }
         catch(Exception exception){
-            System.exit(-1);
+            return -1;
         }
 
     }
@@ -124,7 +125,11 @@ public class GameMain {
     public void initPlayers(Scanner input){
         System.out.println("Enter a number of players between 3-5: ");
         this.getUserInput(input);
-        this.setPlayerCount(lastInput);
+        while(this.setPlayerCount(lastInput) != 1){
+            this.getUserInput(input);
+            this.setPlayerCount(lastInput);
+        }
+
         for (int i = 0; i < playerCount; i++){
             System.out.println("Enter a name for player #"+(i+1)+": ");
             this.getUserInput(input);

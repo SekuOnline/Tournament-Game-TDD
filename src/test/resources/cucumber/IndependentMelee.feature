@@ -2,6 +2,7 @@ Feature: Melee
   Run through an individual melee with the correct loser and injury points.
 
   Scenario Outline: The loser and number of injury points are correctly determined.
+    Given The game has started
     Given Player "1" plays the card <first>
     And Player "2" plays the card <second>
     And Player "3" plays the card <third>
