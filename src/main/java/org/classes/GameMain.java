@@ -160,6 +160,7 @@ public class GameMain {
            }
         }
         //set new leader, then round ends.
+        checkPlayersBelowZero();
         setLeaderIndex((leaderIndex+1)%playerCount);
         startRound(leaderIndex, input);
 
@@ -219,11 +220,12 @@ public class GameMain {
             }
 
             getUserInput(input);
+            System.out.println("User played: "+lastInput);
             Card playedCard = currentPlayer.hand[Integer.parseInt(lastInput) - 1];
 
 
             while(!melee.isValidPlay(melee.determinePlayerNumber(i), playedCard , currentPlayer)){
-                System.out.println("Invalid card played: ");
+                System.out.println("Invalid card played: "+lastInput);
                 getUserInput(input);
                 playedCard = currentPlayer.hand[(Integer.parseInt(lastInput) - 1)];
             }
@@ -256,10 +258,12 @@ public class GameMain {
                 } else if (playedCard.getSuit() == Suit.AL && i == 0) {
                     melee.currentSuit = Suit.NONE;
                 }
-
-                System.out.print("Enter a value for that card (between 1-15): ");
-                getUserInput(input);
-                playedCard.value = Integer.parseInt(lastInput);
+                while((0 >= playedCard.value) || (15 < playedCard.value)){
+                    System.out.print("Enter a value for that card (between 1-15): ");
+                    getUserInput(input);
+                    System.out.println("CHOSEN: "+lastInput);
+                    playedCard.value = Integer.parseInt(lastInput);
+                }
             }
             melee.cardStack[i] = playedCard;
 
@@ -309,7 +313,6 @@ public class GameMain {
             System.out.println("The lowest valued non-duped card was: "+ lowestCard);
             System.out.println(lowestCard.player.getPlayerName()+" is the loser of this melee.\nThey take "+damage+" injury.");
             lowestCard.player.takeDamage(damage);
-            checkPlayersBelowZero();
 
             for (int i = 0; i < playerCount; i++){
                 if (players[i] == lowestCard.player){

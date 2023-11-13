@@ -7,6 +7,8 @@ public class Player {
     public static int maxPlayers = 5;
     public static int initHitPoints = 50;
 
+    public static int handSize = 12;
+
     //private variables
     String playerName;
     int hitPoints;
@@ -15,7 +17,7 @@ public class Player {
     //Constructors:
     public Player(String playerName){
         this.playerName = playerName;
-        this.hand = new Card[12];
+        this.hand = new Card[handSize];
     }
 
 

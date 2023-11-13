@@ -11,6 +11,7 @@ public class GameContext {
     public GameMain game;
 
     public Melee recentMelee;
+    public int meleeLeader;
 
     public String scannerInput;
 
@@ -50,27 +51,132 @@ public class GameContext {
     }
 
 
-    public void addCardContext(Integer playerIndex, String cardCode, int cardIndex) {
-        playerIndex-=1;
+    public void addCardContext(Integer playerIndex, String cardCode) {
         Suit cardSuit = Suit.valueOf(cardCode.substring(0, 2));
         int cardValue;
         //the value is still obtained correctly.
         int mod = cardCode.length()%2;
         cardValue = Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length()));
-        game.players[playerIndex].hand[0] = new Card(cardSuit, cardValue);
-        game.players[playerIndex].hand[0].setPlayer(game.players[playerIndex]);
 
-        //We gave each player the card, now they have to play it
-        scannerInput += "1\n";
-        if (cardSuit == Suit.ME || cardSuit == Suit.AP || cardSuit == Suit.AL) {
-            if (playerIndex == 0 && (cardSuit == Suit.ME || cardSuit == Suit.AP)) {
-                scannerInput += cardCode.substring(2, 4)+ "\n";
+        //Ensure that the index we're giving the card is not full
+        for (int i = 0; i < Player.handSize; i++){
+
+            if (game.players[playerIndex].hand[i] == null){
+                if (cardSuit == Suit.ME || cardSuit == Suit.AP || cardSuit == Suit.AL){
+                    cardValue = 0;
+                }
+                game.players[playerIndex].hand[i] = new Card(cardSuit, cardValue);
+                game.players[playerIndex].hand[i].setPlayer(game.players[playerIndex]);
+                System.out.println("Added "+cardCode+" to the hand of Player "+playerIndex);
+                break;
             }
-            scannerInput += cardValue + "\n";
         }
     }
 
+    public void addCardContextPartTwo(Integer playerIndex, String cardCode){
+        Suit cardSuit = Suit.valueOf(cardCode.substring(0, 2));
+        int cardValue;
+        //the value is still obtained correctly.
+        int mod = cardCode.length()%2;
+        if (cardSuit == Suit.SW || cardSuit == Suit.DE || cardSuit == Suit.AR || cardSuit == Suit.SO){
+            cardValue = Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length()));
+        }
+        else{
+            cardValue = 0;
+        }
+
+
+
+        //Ensure that the index we're giving the card is not full
+        for (int i = 0; i < Player.handSize; i++){
+
+            if (game.players[playerIndex].hand[i] == null){
+                game.players[playerIndex].hand[i] = new Card(cardSuit, cardValue);
+                game.players[playerIndex].hand[i].setPlayer(game.players[playerIndex]);
+                System.out.println("Added "+cardCode+" to the hand of Player "+playerIndex);
+                break;
+            }
+        }
+    }
+
+
+    public void playCard(Integer playerIndex, String cardCode){
+        Suit cardSuit = Suit.valueOf(cardCode.substring(0,2));
+        int mod = cardCode.length()%2;
+        int cardValue = Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length()));
+        if (cardSuit == Suit.ME || cardSuit == Suit.AP || cardSuit == Suit.AL) {
+            cardValue = 0;
+        }
+        Player player = instance.game.players[playerIndex];
+        for (int i = 0; i < Player.handSize; i++){
+            if(player.hand[i] != null){
+                if ((player.hand[i].getSuit().compareTo(cardSuit) == 0) && player.hand[i].getValue() == cardValue){
+                    //card found, add its index to the scanner plus any other info needed.
+
+
+                    scannerInput += (i +1)+ "\n";
+                    instance.chooseValue(playerIndex, cardCode, Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length())));
+                    break;
+                }
+            }
+
+        }
+    }
+
+    public void playCardPartTwo(Integer playerIndex, String cardCode){
+        Suit cardSuit = Suit.valueOf(cardCode.substring(0,2));
+        int mod = cardCode.length()%2;
+        int cardValue;
+        //int cardValue = Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length()));
+        Player player = instance.game.players[playerIndex];
+        for (int i = 0; i < Player.handSize; i++){
+            if(player.hand[i] != null){
+                if ((player.hand[i].getSuit().compareTo(cardSuit) == 0)){
+                    //card found, add its index to the scanner plus any other info needed.
+
+                    if (cardSuit == Suit.SW || cardSuit == Suit.DE || cardSuit == Suit.AR || cardSuit == Suit.SO){
+                        cardValue = Integer.parseInt(cardCode.substring(cardCode.length() - (2-mod), cardCode.length()));
+                        if (player.hand[i].getValue() == cardValue){
+                            scannerInput += (i+1) + "\n";
+                            break;
+                        }
+                    }
+                    else{
+                        scannerInput += (i+1) + "\n";
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    public void chooseValue(int playerIndex, String cardCode, int cardValue){
+        Suit cardSuit = Suit.valueOf(cardCode.substring(0,2));
+        if (cardSuit == Suit.ME || cardSuit == Suit.AP || cardSuit == Suit.AL) {
+            if (playerIndex == instance.meleeLeader && (cardSuit == Suit.ME || cardSuit == Suit.AP)) {
+                scannerInput += cardCode.substring(2, 4)+ "\n";
+            }
+            scannerInput += cardValue + "\n";
+
+        }
+
+
+
+    }
     public void setRecentMelee(Melee melee){
         recentMelee = melee;
     }
+
+    public int getPlayerIndexByName(String playerName){
+        int playerIndex;
+        for(int i = 0; i < instance.game.playerCount; i++){
+            if (instance.game.players[i].getPlayerName().compareTo(playerName) == 0){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

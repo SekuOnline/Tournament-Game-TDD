@@ -5,7 +5,7 @@ import cucumber.context.GameContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import org.junit.Assert;
+
 
 
 import java.util.Scanner;
@@ -18,13 +18,15 @@ public class MeleeStepDefinition {
     public void startTheGame(){
         GameContext context = GameContext.getSavedGameContext();
         context.initGame("4\n", "Player 1\nPlayer 2\nPlayer 3\nPlayer 4\n", "999\n");
-
+        context.meleeLeader = 0;
     }
     @Given("Player {string} plays the card {word}")
     public void playerPlaysTheCard(String playerIndex, String cardCode){
         //Give each player the card designated in the cardCode
+        int pIndex = Integer.parseInt(playerIndex)-1;
         GameContext context = GameContext.getSavedGameContext();
-        context.addCardContext(Integer.parseInt(playerIndex), cardCode, 0);
+        context.addCardContext(pIndex, cardCode);
+        context.playCard(pIndex, cardCode);
 
     }
     @Then("The loser should be {word}")
