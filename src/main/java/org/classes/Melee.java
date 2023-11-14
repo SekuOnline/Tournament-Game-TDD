@@ -12,6 +12,7 @@ public class Melee {
 
     public int loserIndex;
 
+    public Melee(){};
     public Melee(int leaderIndex, int meleeNumber, int playerCount, Player[] players){
         this.leaderIndex = leaderIndex;
         this.meleeNumber = meleeNumber;

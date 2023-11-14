@@ -51,9 +51,12 @@ public class MeleeStepDefinition {
     @And("The injury points should be {int}")
     public void checkInjuryPointsOfMelee(int injury_points){
         GameContext context = GameContext.getSavedGameContext();
-
         assertEquals(injury_points, context.game.getTotalDamage(context.recentMelee.cardStack));
+
     }
+
+
+
 
 
 }

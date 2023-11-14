@@ -26,8 +26,6 @@ public class RobustnessStepDefinition {
 
     }
 
-
-
     @Given("An invalid name for Player {int} {string}")
     public void getInvalidPlayerName(int playerNum, String playerName){
         GameContext context = GameContext.getSavedGameContext();
@@ -82,11 +80,8 @@ public class RobustnessStepDefinition {
     @Given("{word} is the leader of the melee")
     public void startMelee(String leaderName){
         GameContext context = GameContext.getSavedGameContext();
-        //Get the 'leader' from leaderName
         context.meleeLeader = context.getPlayerIndexByName(leaderName);
         context.scannerInput = "";
-        //Might have to move this down FIND
-        //context.game.doMelee(leaderIndex, new Scanner(context.scannerInput));
     }
 
     @Given("{word} is given {string}")
@@ -120,9 +115,12 @@ public class RobustnessStepDefinition {
 
     @Given("The melee occurs")
     public void beginMelee(){
+
         GameContext context = GameContext.getSavedGameContext();
         System.out.println("Here is the melee input: \n"+context.scannerInput);
         context.recentMelee = context.game.doMelee(context.meleeLeader, new Scanner(context.scannerInput));
+        //context.recentMelee = context.game.startRound(context.game.leaderIndex, new Scanner(context.scannerInput), 1);
+
     }
 
     @Then("{word} should be the loser")
@@ -138,6 +136,15 @@ public class RobustnessStepDefinition {
         int actualInjuryPoints = context.game.getTotalDamage(context.recentMelee.cardStack);
         assertEquals(actualInjuryPoints, injuryPoints);
     }
+
+    @Then("{word} has taken {int} damage")
+    public void checkTotalDamageDealt(String playerName, int injuryPoints){
+        GameContext context = GameContext.getSavedGameContext();
+        int playerIndex = context.getPlayerIndexByName(playerName);
+        int actualDamage = context.game.players[playerIndex].initHitPoints - context.game.players[playerIndex].getHitPoints();
+        assertEquals(actualDamage, injuryPoints);
+    }
+
 
 
 

@@ -18,7 +18,7 @@ public class GameContext {
     //constructor
     public GameContext(){
 
-        game = new GameMain();
+        game = new GameMain(1);
         scannerInput = "";
     }
 

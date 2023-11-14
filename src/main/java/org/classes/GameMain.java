@@ -11,14 +11,27 @@ public class GameMain {
     public Deck deck;
     public Player[] players;
 
-    int leaderIndex;
+    public int leaderIndex;
 
+    public boolean shame;
+
+    public int test;
     //Constructor
     public GameMain(){
         playerCount = 0;
         players = new Player[Player.maxPlayers];
         deck = new Deck();
         leaderIndex = 0;
+        test = 0;
+    }
+
+    public GameMain(int testValue){
+        playerCount = 0;
+        players = new Player[Player.maxPlayers];
+        deck = new Deck();
+        leaderIndex = 0;
+        test = testValue;
+
     }
 
     //getters
@@ -47,9 +60,10 @@ public class GameMain {
 
     }
     public void initHitPoints(Scanner input) {
+
         for(Player player : players) {
             if (player != null){
-                player.setHitPoints(Player.initHitPoints);
+                player.setHitPoints(1);
             }
         }
 
@@ -62,6 +76,7 @@ public class GameMain {
                 if (initHP > 0){
                     for(Player player : players) {
                         if (player != null){
+                            player.initHitPoints = initHP;
                             player.setHitPoints(initHP);
                         }
                     }
@@ -142,31 +157,45 @@ public class GameMain {
 
     }
 
-    public void startRound(int leaderIndex, Scanner input){
+    public Melee startRound(int leaderIndex, Scanner input){
         int loserIndex = leaderIndex;
         int prevLoserIndex = leaderIndex;
-        removeHands();
-        deck.shuffle();
-        for (int i = 0; i < playerCount; i++){
-            players[i].dealHand(deck);
+        Melee recentMelee = new Melee();
+        if(test == 0){
+            removeHands();
+            deck.shuffle();
+            for (int i = 0; i < playerCount; i++){
+                players[i].dealHand(deck);
+            }
         }
+
         for (int meleeCount  = 0; meleeCount < 12; meleeCount++){
-           loserIndex = doMelee(loserIndex, input).loserIndex;
+            recentMelee = doMelee(loserIndex, input);
+            if (checkPlayersBelowZero() != null){
+                break;
+            }
+            loserIndex = recentMelee.loserIndex;
            if(loserIndex < 0){
                loserIndex = prevLoserIndex;
            }
            else{
                prevLoserIndex = loserIndex;
            }
+
         }
         //set new leader, then round ends.
-        checkPlayersBelowZero();
+        System.out.println("END OF ROUND _------");
+        if (checkPlayersBelowZero() != null){
+             return recentMelee;
+        }
         setLeaderIndex((leaderIndex+1)%playerCount);
-        startRound(leaderIndex, input);
+        return recentMelee;
+
 
     }
-    public void checkPlayersBelowZero(){
+    public Player[] checkPlayersBelowZero(){
         boolean gameEnd = false;
+
         for (int i = 0; i < playerCount; i++){
             if (players[i].getHitPoints() <= 0){
                 System.out.println(players[i].getPlayerName() + " has fallen below zero hit points.");
@@ -174,16 +203,26 @@ public class GameMain {
             }
         }
         if (gameEnd){
+            Player[] winners = new Player[playerCount];
+            int winnerCount = 0;
             System.out.println("The game has ended. The winners are: ");
             for (int i = 0; i < playerCount; i++){
                 if (players[i].getHitPoints() > 0){
                     System.out.println(players[i].getPlayerName());
-
+                    winners[winnerCount] = players[i];
+                    winnerCount++;
                 }
             }
             System.out.println("Thank you for playing.");
-            System.exit(0);
+            if (test == 0) {
+                System.exit(0);
+            }
+            else{
+                return winners;
+            }
+
         }
+         return null;
 
     }
 
@@ -215,8 +254,11 @@ public class GameMain {
                 System.out.println(currentPlayer.getPlayerName() + " Cannot play any cards and takes 5 shame damage immediately.");
                 currentPlayer.takeDamage(5);
                 //checkHP
-                checkPlayersBelowZero();
-                continue;
+                if(checkPlayersBelowZero() != null){
+                    System.out.println("\nMelee Ended due to shaming\n");
+                    return melee;
+                }
+
             }
 
             getUserInput(input);
@@ -328,12 +370,14 @@ public class GameMain {
 
     //main method:
     public static void main(String[] args){
-        GameMain newGame = new GameMain();
+        GameMain newGame = new GameMain(0);
         Scanner input = new Scanner(System.in);
         newGame.initPlayers(input);
         newGame.startRound(0, input);
 
-
+        while(newGame.checkPlayersBelowZero() == null){
+            newGame.startRound(newGame.leaderIndex, new Scanner(System.in));
+        }
 
 
     }

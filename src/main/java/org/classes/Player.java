@@ -5,7 +5,7 @@ public class Player {
     //static variables: for ease of changing 'arbitrary' values.
     public static int minPlayers = 3;
     public static int maxPlayers = 5;
-    public static int initHitPoints = 50;
+    public int initHitPoints;
 
     public static int handSize = 12;
 

@@ -20,7 +20,7 @@ Feature: Testing for Robustness where the players attempt to break the rules of 
 
     #Beginning of Melee 1
     Given Fred is the leader of the melee
-    And   Fred is given "SO11 AL"
+    Given Fred is given "SO11 AL"
     And   Joe is given "SO6 SW1 DE1 AR1 AL"
     And   Paul is given "SO7"
     Given Fred plays AL
@@ -35,10 +35,11 @@ Feature: Testing for Robustness where the players attempt to break the rules of 
     Then  The melee occurs
     And   Joe should be the loser
     And   Injury points should be 25
+    And   Joe has taken 25 damage
 
     #Beginning of Melee 2
     Given Joe is the leader of the melee
-    And   Joe is given "AR8"
+    Given Joe is given "AR8"
     Given Paul is given "ME"
     Given Fred is given "AP"
     Given Joe plays AR8
@@ -51,6 +52,7 @@ Feature: Testing for Robustness where the players attempt to break the rules of 
     Then  The melee occurs
     And   Joe should be the loser
     And   Injury points should be 40
+    And   Joe has taken 65 damage
 
     #Beginning of Melee 3
     Given Joe is the leader of the melee
@@ -67,6 +69,7 @@ Feature: Testing for Robustness where the players attempt to break the rules of 
     Then  The melee occurs
     And   Fred should be the loser
     And   Injury points should be 25
+    And   Fred has taken 25 damage
 
 
     #Beginning of Melee 4
@@ -84,4 +87,5 @@ Feature: Testing for Robustness where the players attempt to break the rules of 
     Then  The melee occurs
     And   Paul should be the loser
     And   Injury points should be 25
+    And   Paul has taken 25 damage
 
