@@ -14,7 +14,7 @@ Occasionally, refactors labeled "REFAC X: were used to adjust names, documentati
 Finally, acceptance suites were added to test combinations of test cases within a real-time environment.
 
 # Instructions to run code: 
-###Requirements: 
+### Requirements: 
 Intellij IDEA
 
 1. Download and unzip the repository's files, manually or using Git.
